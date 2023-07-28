@@ -1,4 +1,4 @@
-# diag_med_beta
+# DiagMed Beta
 
 A new Flutter project.
 
