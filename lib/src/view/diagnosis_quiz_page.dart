@@ -453,19 +453,17 @@ class _DiagnosisQuizPageState extends State<DiagnosisQuizPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              IconButton(
-                icon: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                  padding: const EdgeInsets.all(4.0),
-                  child: Icon(
-                    Icons.question_mark_rounded,
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.all(0.0),
+                  side: BorderSide(
                     color: Theme.of(context).colorScheme.primary,
                   ),
+                ),
+                child: Icon(
+                  Icons.question_mark_rounded,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 20.0,
                 ),
                 onPressed: () {
                   if (prescricao!.containsKey('dosage')) {
