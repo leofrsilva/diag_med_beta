@@ -25,34 +25,18 @@ class _LoginPageState extends State<LoginPage> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        body: Stack(
-          children: [
-            Positioned(
-              top: 0.0,
-              left: (size.width - 428.0) / 2,
-              child: Image.asset(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Image.asset(
                 'assets/images/group-doctors.png',
-                fit: BoxFit.contain,
+                fit: BoxFit.fitHeight,
                 height: 227.0,
               ),
-            ),
-            Positioned(
-              top: 0.0,
-              child: SizedBox(
-                width: size.width,
-                height: size.height,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 227.0),
-                      _form(context, (size.height) - 227.0),
-                      _buttons(context, (size.height) - 227.0),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
+              _form(context, (size.height) - 227.0),
+              _buttons(context, (size.height) - 227.0),
+            ],
+          ),
         ),
       ),
     );

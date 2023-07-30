@@ -79,15 +79,12 @@ class TitleButton extends StatelessWidget {
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: onTapInterrogation,
-              child: Container(
-                width: 30.0,
-                height: 30.0,
+            IconButton(
+              onPressed: onTapInterrogation,
+              icon: Container(
                 alignment: Alignment.center,
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 8.0,
-                ),
+                margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 6.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color:
@@ -103,16 +100,12 @@ class TitleButton extends StatelessWidget {
                           ],
                         ),
                 ),
-                child: Text(
-                  '?',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontFamily: 'Metropolis',
-                    fontWeight: FontWeight.w700,
-                    color: selected
-                        ? Theme.of(context).colorScheme.primary
-                        : Theme.of(context).colorScheme.onPrimary,
-                  ),
+                child: Icon(
+                  Icons.question_mark_rounded,
+                  size: 20.0,
+                  color: selected
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.onPrimary,
                 ),
               ),
             ),

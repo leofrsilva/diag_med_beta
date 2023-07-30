@@ -156,13 +156,10 @@ O QUADRO DE DISPNEIA INTENSA, DOR TORÁCICA E FEBRE PERSISTENTE LEVANTAM A SUSPE
       context: context,
       builder: (context) {
         return SimpleDialog(
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(28.0),
-            topRight: Radius.circular(28.0),
-          )),
           titlePadding: const EdgeInsets.all(14.0),
-          contentPadding: const EdgeInsets.all(0.0),
+          contentPadding: const EdgeInsets.only(
+            bottom: 22.0,
+          ),
           title: Row(
             children: [
               Expanded(

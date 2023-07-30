@@ -197,14 +197,14 @@ class _DiagnosisQuizPageState extends State<DiagnosisQuizPage> {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              trailing: InkWell(
-                onTap: img.isNotEmpty
+              trailing: IconButton(
+                onPressed: img.isNotEmpty
                     ? () => _controller.showImage(
                         context, map['title'] as String, img)
                     : null,
-                borderRadius: BorderRadius.circular(100.0),
                 splashColor: Theme.of(context).colorScheme.secondaryContainer,
-                child: Container(
+                iconSize: 20.0,
+                icon: Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
@@ -213,7 +213,7 @@ class _DiagnosisQuizPageState extends State<DiagnosisQuizPage> {
                           : Theme.of(context).colorScheme.primary,
                     ),
                   ),
-                  padding: const EdgeInsets.all(4.0),
+                  padding: const EdgeInsets.all(6.0),
                   child: Icon(
                     Icons.photo_camera,
                     color: img.isEmpty
@@ -268,9 +268,11 @@ class _DiagnosisQuizPageState extends State<DiagnosisQuizPage> {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
-                        padding: const EdgeInsets.all(4.0),
+                        padding: const EdgeInsets.all(6.0),
+                        alignment: Alignment.center,
                         child: Icon(
                           Icons.photo_camera,
+                          size: 20.0,
                           color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
@@ -338,14 +340,16 @@ class _DiagnosisQuizPageState extends State<DiagnosisQuizPage> {
         const SizedBox(height: 16.0),
         ..._controller.quiz3abscesso.map((optionAbscesso) {
           return Column(
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Align(
-                alignment: Alignment.center,
+                alignment: Alignment.centerLeft,
                 child: Text(
                   optionAbscesso['title'] as String,
                   style: const TextStyle(
                     fontFamily: 'Metropolis',
                     fontWeight: FontWeight.w600,
+                    fontSize: 17.0,
                   ),
                 ),
               ),
