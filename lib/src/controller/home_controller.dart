@@ -13,4 +13,10 @@ class HomeController {
   _changePage() {
     indexPage.value = _pageController.page?.toInt() ?? 0;
   }
+
+  void dispose() {
+    indexPage.dispose();
+    _pageController.removeListener(_changePage);
+    _pageController.dispose();
+  }
 }

@@ -55,7 +55,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 ),
               ],
             )),
-            const SizedBox(height: 12.0),
+            const SizedBox(height: 8.0),
             Card(
               color: Theme.of(context).colorScheme.secondaryContainer,
               child: InkWell(

@@ -14,73 +14,87 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late HomeController controller;
+  late HomeController _controller;
   final GlobalKey<ScaffoldState> _keyScaffold = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    controller = HomeController();
+    _controller = HomeController();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Provider(
-      create: (_) => controller,
-      child: Scaffold(
-        key: _keyScaffold,
-        drawer: const MenuDrawer(),
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () => _keyScaffold.currentState?.openDrawer(),
-          ),
-          title: const TextFieldAppbar(
-            hintText: 'Pesquise aqui...',
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsetsDirectional.only(end: 8.0),
-              child: IconButton(
-                icon: const Icon(Icons.more_vert),
-                onPressed: () {},
-              ),
+    return Provider<HomeController>(
+      create: (_) => _controller,
+      dispose: (_, homeController) => homeController.dispose(),
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          key: _keyScaffold,
+          drawer: const MenuDrawer(),
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () => _keyScaffold.currentState?.openDrawer(),
             ),
-          ],
+            title: ValueListenableBuilder<int>(
+                valueListenable: _controller.indexPage,
+                builder: (context, index, child) {
+                  if (index == 0) {
+                    return const Text(
+                      'Algorítmo diagnóstico',
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    );
+                  }
+                  return const TextFieldAppbar(
+                    hintText: 'Pesquise aqui...',
+                  );
+                }),
+            actions: [
+              Padding(
+                padding: const EdgeInsetsDirectional.only(end: 8.0),
+                child: IconButton(
+                  icon: const Icon(Icons.more_vert),
+                  onPressed: () {},
+                ),
+              ),
+            ],
+          ),
+          body: PageView(
+            controller: _controller.pages,
+            children: [
+              const DiagnosisPage(),
+              const DashboardPage(),
+              Container(),
+            ],
+          ),
+          bottomNavigationBar: ValueListenableBuilder<int>(
+              valueListenable: _controller.indexPage,
+              builder: (context, index, child) {
+                return NavigationBar(
+                  selectedIndex: index,
+                  labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+                  onDestinationSelected: (index) {
+                    _controller.pages.jumpToPage(index);
+                  },
+                  destinations: const [
+                    NavigationDestination(
+                      icon: Icon(Icons.medical_services),
+                      label: 'Diagnosis',
+                    ),
+                    NavigationDestination(
+                      icon: Icon(Icons.home),
+                      label: 'Home',
+                    ),
+                    NavigationDestination(
+                      icon: Icon(Icons.account_circle_rounded),
+                      label: 'Account',
+                    ),
+                  ],
+                );
+              }),
         ),
-        body: PageView(
-          controller: controller.pages,
-          children: [
-            const DiagnosisPage(),
-            const DashboardPage(),
-            Container(),
-          ],
-        ),
-        bottomNavigationBar: ValueListenableBuilder<int>(
-            valueListenable: controller.indexPage,
-            builder: (context, index, child) {
-              return NavigationBar(
-                selectedIndex: index,
-                labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-                onDestinationSelected: (index) {
-                  controller.pages.jumpToPage(index);
-                },
-                destinations: const [
-                  NavigationDestination(
-                    icon: Icon(Icons.medical_services),
-                    label: 'Diagnosis',
-                  ),
-                  NavigationDestination(
-                    icon: Icon(Icons.home),
-                    label: 'Home',
-                  ),
-                  NavigationDestination(
-                    icon: Icon(Icons.account_circle_rounded),
-                    label: 'Account',
-                  ),
-                ],
-              );
-            }),
       ),
     );
   }

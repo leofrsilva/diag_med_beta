@@ -12,7 +12,7 @@ class MenuDrawer extends StatelessWidget {
           DrawerHeader(
             child: Icon(
               Icons.account_circle_outlined,
-              size: MediaQuery.of(context).size.width * 0.2,
+              size: 100.0,
               color: Theme.of(context).colorScheme.tertiary,
             ),
           ),

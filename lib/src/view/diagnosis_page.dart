@@ -1,5 +1,9 @@
+import 'package:diag_med_beta/routes.dart';
 import 'package:diag_med_beta/src/design/widget/widgets.dart';
 import 'package:flutter/material.dart';
+import 'widget/explicacao_dialog.dart';
+
+import 'dart:math' as math;
 
 class DiagnosisPage extends StatefulWidget {
   const DiagnosisPage({super.key});
@@ -11,8 +15,9 @@ class DiagnosisPage extends StatefulWidget {
 class DiagnosisPageState extends State<DiagnosisPage> {
   int selectedIndex = 0;
 
-  changeIndex(int index) {
+  changeIndex(int index) async {
     setState(() => selectedIndex = index);
+    Navigator.of(context).pushNamed(diagnosisQuizRoute);
   }
 
   @override
@@ -32,47 +37,94 @@ class DiagnosisPageState extends State<DiagnosisPage> {
       {'symptom': 'Sintoma K', 'index': 11, 'action': () => changeIndex(11)},
     ];
 
+    final symptomsDesc = [
+      'Odinofagia” é o termo médico utilizado para designar a sensação de dor ao engolir alimentos, ou seja, a dor ao deglutir.',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+    ];
+
     return Material(
-      // appBar: AppBar(
-      //   title: const Text(
-      //     'Algorítmo diagnóstico',
-      //     style: TextStyle(fontWeight: FontWeight.w600),
-      //   ),
-      //   actions: [
-      //     Padding(
-      //       padding: const EdgeInsetsDirectional.only(end: 8.0),
-      //       child: IconButton(
-      //         icon: const Icon(Icons.more_vert),
-      //         onPressed: () {},
-      //       ),
-      //     ),
-      //   ],
-      // ),
       child: Column(
         children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsetsDirectional.only(
+                bottom: 8.0,
+                start: 16.0,
+                end: 16.0,
+                top: 16.0,
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Busque um sintoma ou sinal?',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontFamily: 'Metropolis',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.rotationY(math.pi),
+                    child: const Icon(Icons.search),
+                  ),
+                ],
+              ),
+            ),
+          ),
           const Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsetsDirectional.only(
+              end: 16.0,
+              start: 16.0,
+              bottom: 16.0,
+            ),
             child: TextFieldOutline(
               hintText: 'Pesquise aqui...',
             ),
           ),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 16.0),
-              child: ListView(
-                children: symptoms.map((Map<String, Object> map) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8.0,
-                    ),
-                    child: TitleButton(
-                      title: map['symptom'] as String,
-                      onTap: map['action'] as Function(),
-                      selected: (map['index'] as int) == selectedIndex,
-                    ),
-                  );
-                }).toList(),
-              ),
+            child: ListView(
+              children: symptoms.map((Map<String, Object> map) {
+                bool isLast =
+                    (symptoms.last['index'] as int) == (map['index'] as int);
+                return Padding(
+                  padding: EdgeInsets.only(
+                    top: 8.0,
+                    left: 16.0,
+                    right: 16.0,
+                    bottom: isLast ? 18.0 : 8.0,
+                  ),
+                  child: TitleButton(
+                    selected: (map['index'] as int) == selectedIndex,
+                    title: map['symptom'] as String,
+                    onTap: map['action'] as Function(),
+                    onTapInterrogation: () async {
+                      setState(() => selectedIndex = map['index'] as int);
+                      await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return ExplicacaoDialog(
+                            title: map['symptom'] as String,
+                            content: symptomsDesc[map['index'] as int],
+                          );
+                        },
+                      );
+                    },
+                  ),
+                );
+              }).toList(),
             ),
           ),
         ],

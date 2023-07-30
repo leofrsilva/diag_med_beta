@@ -29,6 +29,7 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             Positioned(
               top: 0.0,
+              left: (size.width - 428.0) / 2,
               child: Image.asset(
                 'assets/images/group-doctors.png',
                 fit: BoxFit.contain,
@@ -112,7 +113,13 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                     GestureDetector(
-                      child: const Text('Manter conectado?'),
+                      child: const Text(
+                        'Manter conectado?',
+                        style: TextStyle(
+                          fontFamily: 'Metropolis',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                       onTap: () =>
                           setState(() => keepConnected = !keepConnected),
                     ),
@@ -122,6 +129,7 @@ class _LoginPageState extends State<LoginPage> {
               TextButton(
                 child: const Text(
                   'Esqueceu sua senha?',
+                  style: TextStyle(fontFamily: 'Metropolis'),
                 ),
                 onPressed: () {},
               ),
@@ -157,28 +165,38 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, homeRoute);
+                      Navigator.pushReplacementNamed(context, loadingRoute);
                     }),
               ),
             ],
           ),
-          TextButton(
-            child: Text(
-              'Criar uma conta',
-              style: TextStyle(
-                shadows: [
-                  Shadow(
+          const SizedBox(height: 10.0),
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 150.0),
+            child: TextButton(
+              style: TextButton.styleFrom(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Criar uma conta',
+                    style: TextStyle(
+                      height: 0.5,
+                      fontFamily: 'Metropolis',
+                      fontWeight: FontWeight.w700,
                       color: Theme.of(context).colorScheme.primary,
-                      offset: const Offset(0, -2))
+                    ),
+                  ),
+                  const SizedBox(height: 4.0),
+                  Container(
+                    height: 1.0,
+                    margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ],
-                color: Colors.transparent,
-                decoration: TextDecoration.underline,
-                decorationColor: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.w700,
-                fontFamily: 'Metropolis',
               ),
+              onPressed: () {},
             ),
-            onPressed: () {},
           ),
         ],
       ),
